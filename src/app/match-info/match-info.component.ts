@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 
 @Component({
   selector: 'app-match-info',
@@ -7,7 +7,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   templateUrl: './match-info.component.html',
   styleUrl: './match-info.component.css'
 })
-export class MatchInfoComponent {
+export class MatchInfoComponent 
+  implements OnDestroy
+{
+  ngOnDestroy(): void {
+    alert('destruido')
+  }
   @Input() match: string = "";
   @Output() selectedMatch = new EventEmitter<string>();
 

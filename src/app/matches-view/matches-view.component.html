@@ -1,8 +1,38 @@
-<p [style.display]="matchSelected ? 'block' : 'none'">
+<!-- <p *ngIf="matchSelected">
     Seleccionado: {{matchSelected}}
-</p>
+</p> -->
+@if (matchSelected) {
+    <p [ngStyle]="{
+        color: 'red'
+    }">
+        Seleccionado: {{matchSelected | uppercase }}
+    </p>
+    <input [(ngModel)]="matchSelected">
+} @else {
+    <!-- BLOQUE ELSE -->
+}
 
-<app-match-info [match]="matches[0]" 
+@for(match of matches; track match; let index = $index) {
+    <app-match-info
+        [ngClass]="{
+            'title': index == 1
+        }"
+        [match]="match.name"
+        (selectedMatch)="onSelected($event)"
+    />
+}
+
+<button (click)="onDeleteLastItem()">Eliminar último</button>
+
+<p>Mi Fecha: {{ myDate | date:'short' }}</p>
+
+<!-- <app-match-info *ngFor="let match of matches" 
+    [match]="match"
+    (selectedMatch)="onSelected($event)"
+/> -->
+
+
+<!-- <app-match-info [match]="matches[0]" 
 (selectedMatch)="onSelected($event)" />
 <app-match-info [match]="matches[1]" 
-(selectedMatch)="onSelected($event)" />
+(selectedMatch)="onSelected($event)" /> -->
