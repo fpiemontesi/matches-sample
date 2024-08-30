@@ -1,0 +1,8 @@
+<p [style.display]="matchSelected ? 'block' : 'none'">
+    Seleccionado: {{matchSelected}}
+</p>
+
+<app-match-info [match]="matches[0]" 
+(selectedMatch)="onSelected($event)" />
+<app-match-info [match]="matches[1]" 
+(selectedMatch)="onSelected($event)" />

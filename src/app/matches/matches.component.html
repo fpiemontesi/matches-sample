@@ -1,0 +1,7 @@
+<input type="text" [value]="texto" 
+(input)="textChanged($event)">
+
+<p>
+    {{visualizarTexto}}
+</p>
+<button (click)="cambiarTexto('pepe')">Cambiar</button>
