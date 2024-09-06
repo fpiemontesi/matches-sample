@@ -5,9 +5,9 @@
     <p [ngStyle]="{
         color: 'red'
     }">
-        Seleccionado: {{matchSelected | uppercase }}
+        Seleccionado: {{matchSelected.local | uppercase }}
     </p>
-    <input [(ngModel)]="matchSelected">
+    <input [(ngModel)]="matchSelected.local" required>
 } @else {
     <!-- BLOQUE ELSE -->
 }
@@ -17,14 +17,21 @@
         [ngClass]="{
             'title': index == 1
         }"
-        [match]="match.name"
+        [index]="index"
+        [local]="match.local"
+        [visitor]="match.visitor"
+        [localScore]="match.localScore"
+        [visitorScore]="match.visitorScore"
+        [date]="match.date"
         (selectedMatch)="onSelected($event)"
     />
 }
 
 <button (click)="onDeleteLastItem()">Eliminar último</button>
 
-<p>Mi Fecha: {{ myDate | date:'short' }}</p>
+<app-match-form (onSave)="addNewMatch($event)"></app-match-form>
+
+<!-- <p>Mi Fecha: {{ myDate | date:'short' }}</p> -->
 
 <!-- <app-match-info *ngFor="let match of matches" 
     [match]="match"

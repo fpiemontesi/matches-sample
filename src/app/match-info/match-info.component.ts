@@ -1,22 +1,31 @@
-import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-match-info',
   standalone: true,
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './match-info.component.html',
   styleUrl: './match-info.component.css'
 })
 export class MatchInfoComponent 
-  implements OnDestroy
+  implements OnDestroy, OnChanges
 {
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log("MATCH INFO INPUT CHANGE: ", changes)
+  }
   ngOnDestroy(): void {
     alert('destruido')
   }
-  @Input() match: string = "";
-  @Output() selectedMatch = new EventEmitter<string>();
+  @Input() index: number = 0;
+  @Input() local: string = "";
+  @Input() visitor: string = "";
+  @Input() localScore: number = 0;
+  @Input() visitorScore: number = 0;
+  @Input() date?: Date;
+  @Output() selectedMatch = new EventEmitter<number>();
 
   mostrarPartido() {
-    this.selectedMatch.emit(this.match);
+    this.selectedMatch.emit(this.index);
   }
 }

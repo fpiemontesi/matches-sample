@@ -1,0 +1,54 @@
+<form #form="ngForm" (ngSubmit)="save(form)">
+    <div class="mb-3">
+        <label for="local" class="form-label">Local</label>
+        <input type="text" class="form-control" id="local" required 
+            name="local"
+        #local="ngModel" [(ngModel)]="match.local">
+        @if (local.touched && local.invalid) {
+        <span>Debe ingresar el campo local</span>
+        }
+    </div>
+    <div class="mb-3">
+        <label for="visitor" class="form-label">Visitante</label>
+        <input name="visitor" type="text" class="form-control" id="visitor" 
+            required
+            #visitor="ngModel"    
+            [(ngModel)]="match.visitor">
+        @if (visitor.invalid) {
+            <span>Debe ingresar el campo visitante</span>
+        }
+      </div>
+      <div class="mb-3">
+        <label for="localScore" class="form-label">Goles Local</label>
+        <input name="localScore" type="number" class="form-control" id="localScore" 
+            required
+            #localScore="ngModel"    
+            [(ngModel)]="match.localScore">
+        @if (localScore.invalid) {
+            <span>Debe ingresar el campo gol local</span>
+        }
+      </div>
+      <div class="mb-3">
+        <label for="visitorScore" class="form-label">Goles Visitante</label>
+        <input name="visitorScore" type="number" class="form-control" id="visitorScore" 
+            required
+            #visitorScore="ngModel"    
+            [(ngModel)]="match.visitorScore">
+        @if (visitorScore.invalid) {
+            <span>Debe ingresar el campo gol visitante</span>
+        }
+      </div>
+      <div class="mb-3">
+        <label for="date" class="form-label">Fecha</label>
+        <input name="date" type="date" class="form-control" id="date" 
+            #date="ngModel"    
+            [(ngModel)]="match.date">
+      </div>
+      <!-- <button class="btn btn-primary" type="submit" 
+      [disabled]="form.invalid">
+        Guardar
+      </button> -->
+      <button class="btn btn-primary" type="submit">
+        Guardar
+      </button>
+</form>

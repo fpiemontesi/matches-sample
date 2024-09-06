@@ -3,6 +3,7 @@ import { MatchInfoComponent } from '../match-info/match-info.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Match } from '../models/match';
+import { MatchFormComponent } from '../match-form/match-form.component';
 // import { NgFor, NgIf } from '@angular/common';
 
 @Component({
@@ -11,7 +12,8 @@ import { Match } from '../models/match';
   imports: [MatchInfoComponent
     // , NgIf, NgFor
     , CommonModule
-    , FormsModule
+    , FormsModule,
+    MatchFormComponent
   ],
   templateUrl: './matches-view.component.html',
   styleUrl: './matches-view.component.css'
@@ -19,25 +21,36 @@ import { Match } from '../models/match';
 export class MatchesViewComponent
   implements OnInit {
   matches: Match[] = [];
-  matchSelected: string = "";
+  matchSelected?: Match;
   myDate: Date = new Date();
 
   ngOnInit(): void {
     this.matches = [
       {
-        name: "Equipo1 vs Equipo2",
+        local: "Equipo1",
+        visitor: "Equipo2",
+        localScore: 1,
+        visitorScore: 2
       },
       {
-        name: "Equipo3 vs Equipo4"
+        local: "Equipo3",
+        visitor: "Equipo4",
+        localScore: 3,
+        visitorScore: 0,
+        date: new Date()
       }
     ];
   }
 
-  onSelected(selected: string) {
-    this.matchSelected = selected;
+  onSelected(selectedIndex: number) {
+    this.matchSelected = this.matches[selectedIndex];
   }
 
   onDeleteLastItem() {
     this.matches.pop();
+  }
+
+  addNewMatch(newMatch: Match) {
+    this.matches.push(newMatch);
   }
 }
