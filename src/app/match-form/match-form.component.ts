@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { Match } from '../models/match';
 import { FormsModule, NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { MatchService } from '../services/match.service';
 
 @Component({
   selector: 'app-match-form',
@@ -18,7 +19,10 @@ export class MatchFormComponent {
     visitorScore: 0,
     date: new Date()
   };
+  today = new Date();
   @Output() onSave = new EventEmitter<Match>();
+
+  private matchService = inject(MatchService);
 
   save(form: NgForm) {
     if (form.invalid) {
@@ -28,7 +32,12 @@ export class MatchFormComponent {
     }
 
     // this.onSave.emit(this.match);
+    this.matchService.add(form.value);
     this.onSave.emit(form.value);
     form.reset();
+  }
+
+  onDateChange(date: string) {
+    this.match.date = new Date(date);
   }
 }

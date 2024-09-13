@@ -25,24 +25,38 @@
             #localScore="ngModel"    
             [(ngModel)]="match.localScore">
         @if (localScore.invalid) {
-            <span>Debe ingresar el campo gol local</span>
+          @if (localScore.errors?.['required']) {
+            <span>El campo es requerido</span>
+          }
         }
       </div>
       <div class="mb-3">
         <label for="visitorScore" class="form-label">Goles Visitante</label>
         <input name="visitorScore" type="number" class="form-control" id="visitorScore" 
             required
+            min="4"
             #visitorScore="ngModel"    
             [(ngModel)]="match.visitorScore">
         @if (visitorScore.invalid) {
-            <span>Debe ingresar el campo gol visitante</span>
+          @if (visitorScore.getError('required')) {
+            <span>El campo gol visitante es requerido</span>
+          }
+          @if (visitorScore.getError('min')) {
+            <span>El campo gol visitante debe ser mayor a 
+              {{visitorScore.getError('min').min}} 
+              pero el valor actual es
+              {{visitorScore.getError('min').actual}} 
+            </span>
+          }
         }
       </div>
       <div class="mb-3">
         <label for="date" class="form-label">Fecha</label>
         <input name="date" type="date" class="form-control" id="date" 
-            #date="ngModel"    
-            [(ngModel)]="match.date">
+            #date="ngModel" 
+            [min]="today | date:'yyyy-MM-dd'"   
+            [ngModel]="match.date | date:'yyyy-MM-dd'"
+            (ngModelChange)="onDateChange($event)">
       </div>
       <!-- <button class="btn btn-primary" type="submit" 
       [disabled]="form.invalid">

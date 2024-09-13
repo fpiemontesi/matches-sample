@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatchInfoComponent } from '../match-info/match-info.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Match } from '../models/match';
 import { MatchFormComponent } from '../match-form/match-form.component';
+import { MatchService } from '../services/match.service';
 // import { NgFor, NgIf } from '@angular/common';
 
 @Component({
@@ -24,22 +25,15 @@ export class MatchesViewComponent
   matchSelected?: Match;
   myDate: Date = new Date();
 
+  // private matchService: MatchService = inject(MatchService);
+  constructor(private matchService: MatchService) {}
+
   ngOnInit(): void {
-    this.matches = [
-      {
-        local: "Equipo1",
-        visitor: "Equipo2",
-        localScore: 1,
-        visitorScore: 2
-      },
-      {
-        local: "Equipo3",
-        visitor: "Equipo4",
-        localScore: 3,
-        visitorScore: 0,
-        date: new Date()
-      }
-    ];
+    this.loadMatches();
+  }
+
+  loadMatches() {
+    this.matches = this.matchService.getAll();
   }
 
   onSelected(selectedIndex: number) {
@@ -47,10 +41,14 @@ export class MatchesViewComponent
   }
 
   onDeleteLastItem() {
-    this.matches.pop();
+    this.matchService.deleteLast();
+    this.loadMatches();
   }
 
   addNewMatch(newMatch: Match) {
-    this.matches.push(newMatch);
+  }
+
+  onDeleted(index: number) {
+    this.loadMatches();
   }
 }
