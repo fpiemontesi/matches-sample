@@ -24,13 +24,16 @@
         [visitorScore]="match.visitorScore"
         [date]="match.date"
         (selectedMatch)="onSelected($event)"
-        (deletedMatch)="onDeleted($event)"
+        (deletedMatch)="onDeleted()"
     />
 }
 
 <button (click)="onDeleteLastItem()">Eliminar último</button>
+<button (click)="onNew()">Agregar</button>
 
-<app-match-form (onSave)="loadMatches()"></app-match-form>
+@if (config?.showForm) {
+    <app-match-form (onSave)="loadMatches()"></app-match-form>
+}
 
 <!-- <p>Mi Fecha: {{ myDate | date:'short' }}</p> -->
 

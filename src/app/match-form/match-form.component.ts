@@ -3,6 +3,7 @@ import { Match } from '../models/match';
 import { FormsModule, NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { MatchService } from '../services/match.service';
+import { VisualizerService } from '../services/visualizer.service';
 
 @Component({
   selector: 'app-match-form',
@@ -20,9 +21,10 @@ export class MatchFormComponent {
     date: new Date()
   };
   today = new Date();
-  @Output() onSave = new EventEmitter<Match>();
+  @Output() onSave = new EventEmitter();
 
   private matchService = inject(MatchService);
+  private visualizerService = inject(VisualizerService);
 
   save(form: NgForm) {
     if (form.invalid) {
@@ -32,12 +34,12 @@ export class MatchFormComponent {
     }
 
     // this.onSave.emit(this.match);
-    this.matchService.add(form.value);
-    this.onSave.emit(form.value);
+    const copyMatch = {
+      ...this.match
+    }
+    this.matchService.add(copyMatch);
+    this.onSave.emit();
     form.reset();
-  }
-
-  onDateChange(date: string) {
-    this.match.date = new Date(date);
+    this.visualizerService.toggleShowForm();
   }
 }

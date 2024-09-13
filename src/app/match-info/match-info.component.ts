@@ -25,7 +25,7 @@ export class MatchInfoComponent
   @Input() visitorScore: number = 0;
   @Input() date?: Date;
   @Output() selectedMatch = new EventEmitter<number>();
-  @Output() deletedMatch = new EventEmitter<number>();
+  @Output() deletedMatch = new EventEmitter<void>();
 
   private matchService = inject(MatchService);
 
@@ -35,6 +35,6 @@ export class MatchInfoComponent
 
   deleteMatch() {
     this.matchService.delete(this.index);
-    this.deletedMatch.emit(this.index);
+    this.deletedMatch.emit();
   }
 }

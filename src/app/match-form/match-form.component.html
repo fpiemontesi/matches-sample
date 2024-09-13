@@ -56,7 +56,7 @@
             #date="ngModel" 
             [min]="today | date:'yyyy-MM-dd'"   
             [ngModel]="match.date | date:'yyyy-MM-dd'"
-            (ngModelChange)="onDateChange($event)">
+            (ngModelChange)="match.date = $event">
       </div>
       <!-- <button class="btn btn-primary" type="submit" 
       [disabled]="form.invalid">

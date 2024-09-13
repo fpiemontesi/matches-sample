@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { Match } from '../models/match';
 import { MatchFormComponent } from '../match-form/match-form.component';
 import { MatchService } from '../services/match.service';
+import { VisualizerService } from '../services/visualizer.service';
+import { Configuration } from '../models/configuration';
 // import { NgFor, NgIf } from '@angular/common';
 
 @Component({
@@ -16,6 +18,7 @@ import { MatchService } from '../services/match.service';
     , FormsModule,
     MatchFormComponent
   ],
+  providers: [VisualizerService],
   templateUrl: './matches-view.component.html',
   styleUrl: './matches-view.component.css'
 })
@@ -24,12 +27,16 @@ export class MatchesViewComponent
   matches: Match[] = [];
   matchSelected?: Match;
   myDate: Date = new Date();
+  config?: Configuration;
 
   // private matchService: MatchService = inject(MatchService);
-  constructor(private matchService: MatchService) {}
+  constructor(private matchService: MatchService,
+    private visualizerService: VisualizerService
+  ) {}
 
   ngOnInit(): void {
     this.loadMatches();
+    this.config = this.visualizerService.getConfiguration();
   }
 
   loadMatches() {
@@ -45,10 +52,11 @@ export class MatchesViewComponent
     this.loadMatches();
   }
 
-  addNewMatch(newMatch: Match) {
+  onNew() {
+    this.visualizerService.toggleShowForm();
   }
 
-  onDeleted(index: number) {
+  onDeleted() {
     this.loadMatches();
   }
 }
