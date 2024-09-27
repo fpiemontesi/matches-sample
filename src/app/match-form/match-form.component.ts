@@ -1,9 +1,11 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, EventEmitter, inject, OnDestroy, Output } from '@angular/core';
 import { Match } from '../models/match';
 import { FormsModule, NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { MatchService } from '../services/match.service';
 import { VisualizerService } from '../services/visualizer.service';
+import { MatchApiService } from '../services/match-api.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-match-form',
@@ -12,7 +14,7 @@ import { VisualizerService } from '../services/visualizer.service';
   templateUrl: './match-form.component.html',
   styleUrl: './match-form.component.css'
 })
-export class MatchFormComponent {
+export class MatchFormComponent implements OnDestroy {
   match: Match = {
     local: '',
     visitor: '',
@@ -22,9 +24,15 @@ export class MatchFormComponent {
   };
   today = new Date();
   @Output() onSave = new EventEmitter();
+  subscription = new Subscription();
 
   private matchService = inject(MatchService);
   private visualizerService = inject(VisualizerService);
+  private readonly matchApiService = inject(MatchApiService);
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   save(form: NgForm) {
     if (form.invalid) {
@@ -37,9 +45,17 @@ export class MatchFormComponent {
     const copyMatch = {
       ...this.match
     }
-    this.matchService.add(copyMatch);
-    this.onSave.emit();
-    form.reset();
-    this.visualizerService.toggleShowForm();
+    // this.matchService.add(copyMatch);
+    const addSubscription = this.matchApiService.add(copyMatch).subscribe({
+      next: () => {
+        this.onSave.emit();
+        form.reset();
+        this.visualizerService.toggleShowForm();
+      },
+      error: (err) => {
+        alert('Error al comunicarse con la API')
+      }
+    });
+    this.subscription.add(addSubscription);
   }
 }
