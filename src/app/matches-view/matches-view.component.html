@@ -1,16 +1,8 @@
 <!-- <p *ngIf="matchSelected">
     Seleccionado: {{matchSelected}}
 </p> -->
-@if (matchSelected) {
-    <p [ngStyle]="{
-        color: 'red'
-    }">
-        Seleccionado: {{matchSelected.local | uppercase }}
-    </p>
-    <input [(ngModel)]="matchSelected.local" required>
-} @else {
-    <!-- BLOQUE ELSE -->
-}
+<app-match-selector></app-match-selector>
+
 
 @for(match of matches; track match; let index = $index) {
     <app-match-info

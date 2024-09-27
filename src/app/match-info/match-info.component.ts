@@ -31,6 +31,9 @@ export class MatchInfoComponent
 
   showMatch() {
     this.selectedMatch.emit(this.index);
+    this.matchService.setSelectedMatch(
+      this.local + " vs " + this.visitor
+    );
   }
 
   deleteMatch() {

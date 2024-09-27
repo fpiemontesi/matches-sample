@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Match } from '../models/match';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class MatchService {
       date: new Date()
     }
   ];
+  private matchSelectedSubject = new Subject<string>();
 
   getAll(): Match[] {
     return [
@@ -37,5 +39,16 @@ export class MatchService {
 
   add(match: Match) {
     this.matches.push(match);
+  }
+
+  // send values
+  setSelectedMatch(selectedMatch: string) {
+    this.matchSelectedSubject.next(selectedMatch);
+  }
+
+  // listen values
+  getSelectedMatch(): Observable<string> {
+    const observable = this.matchSelectedSubject.asObservable();
+    return observable;
   }
 }

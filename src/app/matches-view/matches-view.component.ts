@@ -7,6 +7,7 @@ import { MatchFormComponent } from '../match-form/match-form.component';
 import { MatchService } from '../services/match.service';
 import { VisualizerService } from '../services/visualizer.service';
 import { Configuration } from '../models/configuration';
+import { MatchSelectorComponent } from '../match-selector/match-selector.component';
 // import { NgFor, NgIf } from '@angular/common';
 
 @Component({
@@ -16,7 +17,8 @@ import { Configuration } from '../models/configuration';
     // , NgIf, NgFor
     , CommonModule
     , FormsModule,
-    MatchFormComponent
+    MatchFormComponent,
+    MatchSelectorComponent
   ],
   providers: [VisualizerService],
   templateUrl: './matches-view.component.html',
