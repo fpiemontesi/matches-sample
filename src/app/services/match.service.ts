@@ -8,12 +8,14 @@ import { Observable, Subject } from 'rxjs';
 export class MatchService {
   private matches: Match[] = [
     {
+      id: "",
       local: "Equipo1",
       visitor: "Equipo2",
       localScore: 1,
       visitorScore: 2
     },
     {
+      id: "",
       local: "Equipo3",
       visitor: "Equipo4",
       localScore: 3,

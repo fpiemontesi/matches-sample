@@ -1,11 +1,12 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, inject, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
 import { MatchService } from '../services/match.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-match-info',
   standalone: true,
-  imports: [DatePipe],
+  imports: [DatePipe, RouterModule],
   templateUrl: './match-info.component.html',
   styleUrl: './match-info.component.css'
 })
@@ -16,9 +17,10 @@ export class MatchInfoComponent
     console.log("MATCH INFO INPUT CHANGE: ", changes)
   }
   ngOnDestroy(): void {
-    alert('destruido')
+    // alert('destruido')
   }
   @Input() index: number = 0;
+  @Input() id: string = "";
   @Input() local: string = "";
   @Input() visitor: string = "";
   @Input() localScore: number = 0;

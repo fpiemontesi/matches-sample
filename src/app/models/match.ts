@@ -1,4 +1,5 @@
 export interface Match {
+    id: string;
     local: string;
     visitor: string;
     localScore: number;

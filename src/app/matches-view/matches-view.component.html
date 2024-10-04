@@ -1,15 +1,10 @@
-<!-- <p *ngIf="matchSelected">
-    Seleccionado: {{matchSelected}}
-</p> -->
-<app-match-selector></app-match-selector>
-
-
 @for(match of matches; track match; let index = $index) {
     <app-match-info
         [ngClass]="{
             'title': index == 1
         }"
         [index]="index"
+        [id]="match.id"
         [local]="match.local"
         [visitor]="match.visitor"
         [localScore]="match.localScore"
@@ -22,20 +17,3 @@
 
 <button (click)="onDeleteLastItem()">Eliminar último</button>
 <button (click)="onNew()">Agregar</button>
-
-@if (config?.showForm) {
-    <app-match-form (onSave)="loadMatches()"></app-match-form>
-}
-
-<!-- <p>Mi Fecha: {{ myDate | date:'short' }}</p> -->
-
-<!-- <app-match-info *ngFor="let match of matches" 
-    [match]="match"
-    (selectedMatch)="onSelected($event)"
-/> -->
-
-
-<!-- <app-match-info [match]="matches[0]" 
-(selectedMatch)="onSelected($event)" />
-<app-match-info [match]="matches[1]" 
-(selectedMatch)="onSelected($event)" /> -->

@@ -22,4 +22,10 @@ export class MatchApiService {
       this.url, match
     )
   }
+
+  getById(id: string): Observable<Match> {
+    return this.http.get<Match>(
+      `${this.url}/${id}`
+    );
+  }
 }

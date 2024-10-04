@@ -6,6 +6,7 @@ import { MatchService } from '../services/match.service';
 import { VisualizerService } from '../services/visualizer.service';
 import { MatchApiService } from '../services/match-api.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-match-form',
@@ -16,6 +17,7 @@ import { Subscription } from 'rxjs';
 })
 export class MatchFormComponent implements OnDestroy {
   match: Match = {
+    id: '',
     local: '',
     visitor: '',
     localScore: 0,
@@ -29,6 +31,7 @@ export class MatchFormComponent implements OnDestroy {
   private matchService = inject(MatchService);
   private visualizerService = inject(VisualizerService);
   private readonly matchApiService = inject(MatchApiService);
+  private readonly router = inject(Router);
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -48,9 +51,7 @@ export class MatchFormComponent implements OnDestroy {
     // this.matchService.add(copyMatch);
     const addSubscription = this.matchApiService.add(copyMatch).subscribe({
       next: () => {
-        this.onSave.emit();
-        form.reset();
-        this.visualizerService.toggleShowForm();
+        this.router.navigate(['list']);
       },
       error: (err) => {
         alert('Error al comunicarse con la API')

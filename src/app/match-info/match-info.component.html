@@ -1,8 +1,9 @@
+<strong>ID: {{id}}</strong>
 <p>
     {{local}} ({{localScore}}) vs ({{visitorScore}}) {{visitor}}
     @if (date) {
         - {{date | date:'dd/MM/yyyy'}}
     }
-    <button (click)="showMatch()">Ver más</button>
+    <button (click)="showMatch()" [routerLink]="['/selected', id]">Ver más</button>
     <button (click)="deleteMatch()">Borrar</button>
 </p>

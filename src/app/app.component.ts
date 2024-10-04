@@ -1,16 +1,15 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { MatchesComponent } from './matches/matches.component';
-import { MatchesViewComponent } from './matches-view/matches-view.component';
+import { RouterModule, RouterOutlet } from '@angular/router';
+import { VisualizerService } from './services/visualizer.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     RouterOutlet, 
-    MatchesComponent, 
-    MatchesViewComponent
+    RouterModule
   ],
+  providers: [VisualizerService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
