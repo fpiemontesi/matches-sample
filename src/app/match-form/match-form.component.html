@@ -1,62 +1,53 @@
-<form #form="ngForm" (ngSubmit)="save(form)">
+<form [formGroup]="form" (ngSubmit)="save()">
     <div class="mb-3">
         <label for="local" class="form-label">Local</label>
-        <input type="text" class="form-control" id="local" required 
-            name="local"
-        #local="ngModel" [(ngModel)]="match.local">
-        @if (local.touched && local.invalid) {
-        <span>Debe ingresar el campo local</span>
+        <input type="text" class="form-control" id="local" formControlName="local">
+        @if (form.controls["local"]; as local) {
+          @if (local.touched && local.invalid) {
+            <span>Debe ingresar el campo local</span>
+            }
         }
     </div>
     <div class="mb-3">
         <label for="visitor" class="form-label">Visitante</label>
-        <input name="visitor" type="text" class="form-control" id="visitor" 
-            required
-            #visitor="ngModel"    
-            [(ngModel)]="match.visitor">
-        @if (visitor.invalid) {
+        <input formControlName="visitor" type="text" class="form-control" id="visitor">
+        @if (form.controls["visitor"].invalid) {
             <span>Debe ingresar el campo visitante</span>
         }
       </div>
       <div class="mb-3">
         <label for="localScore" class="form-label">Goles Local</label>
-        <input name="localScore" type="number" class="form-control" id="localScore" 
-            required
-            #localScore="ngModel"    
-            [(ngModel)]="match.localScore">
-        @if (localScore.invalid) {
-          @if (localScore.errors?.['required']) {
-            <span>El campo es requerido</span>
+        <input formControlName="localScore" type="number" class="form-control" id="localScore" >
+        @if (form.controls["localScore"]; as localScore) {
+          @if (localScore.invalid) {
+            @if (localScore.errors?.['required']) {
+              <span>El campo es requerido</span>
+            }
           }
         }
       </div>
       <div class="mb-3">
         <label for="visitorScore" class="form-label">Goles Visitante</label>
-        <input name="visitorScore" type="number" class="form-control" id="visitorScore" 
-            required
-            min="4"
-            #visitorScore="ngModel"    
-            [(ngModel)]="match.visitorScore">
-        @if (visitorScore.invalid) {
-          @if (visitorScore.getError('required')) {
-            <span>El campo gol visitante es requerido</span>
-          }
-          @if (visitorScore.getError('min')) {
-            <span>El campo gol visitante debe ser mayor a 
-              {{visitorScore.getError('min').min}} 
-              pero el valor actual es
-              {{visitorScore.getError('min').actual}} 
-            </span>
+        <input formControlName="visitorScore" type="number" class="form-control" id="visitorScore">
+        @if (form.controls["visitorScore"]; as visitorScore) {
+            @if (visitorScore.invalid) {
+              @if (visitorScore.getError('required')) {
+                <span>El campo gol visitante es requerido</span>
+              }
+              @if (visitorScore.getError('min')) {
+                <span>El campo gol visitante debe ser mayor a 
+                  {{visitorScore.getError('min').min}} 
+                  pero el valor actual es
+                  {{visitorScore.getError('min').actual}} 
+                </span>
+              }
           }
         }
       </div>
       <div class="mb-3">
         <label for="date" class="form-label">Fecha</label>
-        <input name="date" type="date" class="form-control" id="date" 
-            #date="ngModel" 
-            [min]="today | date:'yyyy-MM-dd'"   
-            [ngModel]="match.date | date:'yyyy-MM-dd'"
-            (ngModelChange)="match.date = $event">
+        <input formControlName="date" type="date" class="form-control" id="date" 
+            [min]="today | date:'yyyy-MM-dd'">
       </div>
       <!-- <button class="btn btn-primary" type="submit" 
       [disabled]="form.invalid">
@@ -66,3 +57,5 @@
         Guardar
       </button>
 </form>
+
+{{form.value | json}}
