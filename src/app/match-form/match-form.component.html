@@ -49,6 +49,29 @@
         <input formControlName="date" type="date" class="form-control" id="date" 
             [min]="today | date:'yyyy-MM-dd'">
       </div>
+      <div>
+        <h4>Eventos:</h4>
+        <button type="button" (click)="onNewEvent()">+</button>
+        <div class="row" formArrayName="events">
+          @for (item of events.controls; track $index) {
+            <div class="col-6">
+              <button type="button" (click)="onDeleteEvent($index)">x</button>
+              <div [formGroupName]="$index">
+                <h6>Evento #{{$index + 1}}</h6>
+                <div>
+                  <label for="inputMinutes" class="form-label">Minutos</label>
+                  <input formControlName="minutes" type="number" class="form-control" id="inputMinutes">
+                </div>
+                <div>
+                  <label for="inputSeconds" class="form-label">Segundos</label>
+                  <input formControlName="seconds" type="number" class="form-control" id="inputSeconds">
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+        
+      </div>
       <!-- <button class="btn btn-primary" type="submit" 
       [disabled]="form.invalid">
         Guardar
